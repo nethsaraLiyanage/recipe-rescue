@@ -1,0 +1,271 @@
+// ignore: file_names
+// ignore: file_names
+import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:recipe_rescue/model/User.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:recipe_rescue/auth/Auth.dart';
+import 'package:recipe_rescue/utils/connection.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final storage = const FlutterSecureStorage();
+  int currentIndex = 1;
+
+  Future login() async {
+    var res = await http.post(Uri.parse("${Connection.baseUrl}/user/login"),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charSet=UTF-8'
+        },
+        body: jsonEncode(
+            <String, String>{'email': user.email, 'password': user.password}));
+    var result = await jsonDecode(res.body);
+    if (result['status'] == 200) {
+      var userID = result['user']['_id'];
+      print(result['user']['deliveryAddress']);
+      await Auth.rememberUser(userID);
+      await storage.write(
+          key: "address", value: result['user']['deliveryAddress']);
+      showTopSnackBar(
+        context as OverlayState,
+        const CustomSnackBar.success(
+          message: "Successfilly Logged In",
+        ),
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/home');
+    } else if (result['status'] == 401) {
+      showTopSnackBar(
+        context as OverlayState,
+        const CustomSnackBar.error(
+          message:
+              "Incorrect email or password. Please check your credentials and try again",
+        ),
+      );
+    } else if (result['status'] == 404) {
+      showTopSnackBar(
+        context as OverlayState,
+        const CustomSnackBar.error(
+          message: "User does not exist!",
+        ),
+      );
+    } else {
+      showTopSnackBar(
+        context as OverlayState,
+        const CustomSnackBar.error(
+          message: "Something went wrong!",
+        ),
+      );
+    }
+  }
+
+  Future<void> rememberUser(String id) async {
+    await storage.write(key: "user_id", value: id);
+  }
+
+  Future<String> getUserId() async {
+    var userId = storage.read(key: "user_id").toString();
+    return userId;
+  }
+
+  User user = User('', '', '', '', '', []);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 180,
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage('assets/images/wave2.png'),
+              //     fit: BoxFit.fill
+              //   )
+              // ),
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    top: 55,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 120.0,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              child: const Center(
+                child: Text(
+                  "Login",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 35, 35, 35),
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    child: Column(
+                      children: <Widget>[
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: TextFormField(
+                                    controller: TextEditingController(
+                                        text: user.email),
+                                    onChanged: (value) {
+                                      user.email = value;
+                                    },
+                                    validator: (String? value) {
+                                      if (value!.isEmpty) {
+                                        return 'Email is Required';
+                                      } else if (RegExp(
+                                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          .hasMatch(value)) {
+                                        return null;
+                                      } else {
+                                        return 'Enter a valid email';
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.email,
+                                        color: Color.fromARGB(255, 54, 54, 54),
+                                      ),
+                                      contentPadding:
+                                          EdgeInsets.only(top: 15),
+                                      hintText: 'Email',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: TextFormField(
+                                    obscureText: true,
+                                    controller: TextEditingController(
+                                        text: user.password),
+                                    onChanged: (value) {
+                                      user.password = value;
+                                    },
+                                    validator: (String? value) {
+                                      if (value!.isEmpty) {
+                                        return 'Password is Required';
+                                      } else if (1 == 1) {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.lock,
+                                        color: Color.fromARGB(255, 54, 54, 54),
+                                      ),
+                                      contentPadding:
+                                          EdgeInsets.only(top: 15),
+                                      hintText: 'Password',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: const Color.fromARGB(255, 54, 54, 54),
+                      shape: const CircleBorder(
+                        side: BorderSide(color: Colors.transparent)),
+                    ),
+                    onPressed: () {},
+                    child: const Text("Forgot Password ?"),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: const Color.fromARGB(255, 0, 0, 0),
+                      padding: const EdgeInsets.all(15.0), 
+                      disabledForegroundColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.38),
+                      // minimumSize: Size(MediaQuery.of(context).size.width-20,200.0),
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                            color: Color(0xFFFFC941),
+                            width: 1,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(50)),
+                    ),  
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        login();
+                      }
+                    },
+                    child:
+                        const Text('Login', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+                  ),
+                  const SizedBox(height: 10),
+                  SignInButton(
+                    Buttons.Google,
+                    text: "Sign up with Google",
+                    onPressed: () {},
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      shape: const CircleBorder(
+                        side: BorderSide(color: Colors.transparent)),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/register');
+                    },
+                    child: const Text("Don’t have an  account? Sign Up"),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
