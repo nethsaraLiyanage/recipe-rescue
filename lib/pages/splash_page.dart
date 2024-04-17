@@ -54,21 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 204, 104, 3)),
                     ),
                     const SizedBox(height: 200.0),
-                    // const Text(
-                    //   "Pizza Hut",
-                    //   style: TextStyle(
-                    //       color: Colors.redAccent,
-                    //       fontFamily: 'Radicalis',
-                    //       // fontWeight: FontWeight.bold,
-                    //       fontSize: 30.0),
-                    // ),
-                    // const Text(
-                    //   "SRI LANKA",
-                    //   style: TextStyle(
-                    //       color: Colors.black,
-                    //       // fontWeight: FontWeight.bold,
-                    //       fontSize: 15.0),
-                    // )
 
                   ],
                 ),

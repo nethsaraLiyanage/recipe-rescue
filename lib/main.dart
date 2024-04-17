@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:recipe_rescue/pages/Login.dart';
 import 'package:recipe_rescue/pages/Register.dart';
+import 'package:recipe_rescue/pages/profile_screen.dart';
 import 'package:recipe_rescue/pages/splash_page.dart';
+import 'package:recipe_rescue/pages/welcome_screen.dart';
+
+import 'pages/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +26,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/login': (context) => const Login(),
         '/register': (context) => const Register(),
+        '/home': (context) => const HomeScreen(),
+        '/profile': (context) => const ProfileScreen(),
+        '/welcome': (context) => const WelcomeScreen(),
       },
     );
   }

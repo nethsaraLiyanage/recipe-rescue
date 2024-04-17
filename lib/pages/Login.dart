@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
         ),
       );
       // ignore: use_build_context_synchronously
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, '/welcome');
     } else if (result['status'] == 401) {
       showTopSnackBar(
         context as OverlayState,
@@ -235,9 +235,10 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(50)),
                     ),  
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        login();
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      //   login();
+                      // }
+                       Navigator.pushNamed(context, '/welcome');
                     },
                     child:
                         const Text('Login', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
