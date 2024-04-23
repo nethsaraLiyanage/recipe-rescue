@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_rescue/pages/Login.dart';
 import 'package:recipe_rescue/pages/Register.dart';
 import 'package:recipe_rescue/pages/profile_screen.dart';
+import 'package:recipe_rescue/pages/questions.dart';
 import 'package:recipe_rescue/pages/splash_page.dart';
 import 'package:recipe_rescue/pages/welcome_screen.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/welcome': (context) => const WelcomeScreen(),
+        '/questions': (context) => const QuestionScreen(),
       },
     );
   }

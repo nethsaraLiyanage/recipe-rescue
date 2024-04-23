@@ -296,9 +296,10 @@ class _RegisterState extends State<Register> {
                         borderRadius: BorderRadius.circular(50)),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        save();
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      //   save();
+                      // }
+                      Navigator.pushNamed(context, '/questions');
                     },
                     child:
                         const Text('Sign Up', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
