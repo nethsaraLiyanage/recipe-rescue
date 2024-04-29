@@ -89,6 +89,8 @@ flutter:
     - assets/images/star.png
     - assets/images/items.png
     - assets/images/chicken_curry1.png
+    - assets/images/notification_background.png
+    - assets/images/servings.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

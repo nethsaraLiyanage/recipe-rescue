@@ -1,9 +1,11 @@
+import 'package:recipe_rescue/pages/notifications_screen.dart';
 import 'package:recipe_rescue/pages/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:recipe_rescue/model/tech_models.dart';
+import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/widgets/custom_appbar.dart';
 import 'package:recipe_rescue/widgets/progress_bar.dart';
 
@@ -59,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen>
       },
       {
         'icon': 'assets/images/saved.png',
-        'title': 'Saved',
+        'title': 'Servings',
       },
       {'icon': 'assets/images/recipe_book.png', 
         'title': 'Recipe Book'
@@ -78,6 +80,20 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         );
       }
+      if (title == 'Servings') {
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (ctx) => ServingsScreen(),
+        //   ),
+        // );
+      }
+    }
+    void onNotifications() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => NotificationsScreen(),
+        ),
+      );
     }
 
     return Scaffold(
@@ -93,7 +109,9 @@ class _HomeScreenState extends State<HomeScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 8),
-                const CustomAppBar(),
+                CustomAppBar(
+                  onTap: onNotifications,
+                ),
                 const SizedBox(height: 35), 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen>
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
-                        'Categories',
+                        '',
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -128,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 5),
+                      padding: const EdgeInsets.only(right: 10),
                       child: TextButton(
                           onPressed: () {},
                           child: Text(
@@ -143,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen>
                     )
                   ],
                 ),
-                const SizedBox(height: 21),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -160,24 +178,24 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                   ],
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
+                      padding: const EdgeInsets.only(left: 20),
                       child: Text(
                         'Popular Recipes',
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w200,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
                             ),
                       ),
                     ),
                     
                   ],
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 15),
                 CarouselSlider(
                   items: detailItems
                       .map(
@@ -198,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen>
                       .toList(),
                   options: CarouselOptions(
                     height: size.height * 0.28,
-                    enableInfiniteScroll: false,
+                    enableInfiniteScroll: true,
                     initialPage: 0,
                   ),
                 ),
