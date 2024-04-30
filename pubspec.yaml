@@ -91,6 +91,11 @@ flutter:
     - assets/images/chicken_curry1.png
     - assets/images/notification_background.png
     - assets/images/servings.png
+    - assets/images/thankyou.png
+    - assets/images/recipe.png
+    - assets/images/meal.png
+    - assets/images/save_screen.png
+    - assets/images/recipe_book_screen.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

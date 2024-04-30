@@ -123,6 +123,37 @@ class _RegisterState extends State<Register> {
                                   borderRadius: BorderRadius.circular(25),
                                   child: TextFormField(
                                     controller: TextEditingController(
+                                        text: user.full_name),
+                                    onChanged: (value) {
+                                      user.full_name = value;
+                                    },
+                                    validator: (String? value) {
+                                      if (value!.isEmpty) {
+                                        return 'Name is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.person,
+                                        color: Color.fromARGB(255, 46, 46, 46),
+                                      ),
+                                      contentPadding:
+                                          EdgeInsets.only(top: 15),
+                                      hintText: 'Full name',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: TextFormField(
+                                    controller: TextEditingController(
                                         text: user.email),
                                     onChanged: (value) {
                                       user.email = value;
@@ -147,37 +178,6 @@ class _RegisterState extends State<Register> {
                                       contentPadding:
                                           EdgeInsets.only(top: 15),
                                       hintText: 'Email',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Material(
-                                  elevation: 5.0,
-                                  borderRadius: BorderRadius.circular(25),
-                                  child: TextFormField(
-                                    controller: TextEditingController(
-                                        text: user.delivery_address),
-                                    onChanged: (value) {
-                                      user.delivery_address = value;
-                                    },
-                                    validator: (String? value) {
-                                      if (value!.isEmpty) {
-                                        return 'Address is Required';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(
-                                        Icons.home,
-                                        color: Color.fromARGB(255, 46, 46, 46),
-                                      ),
-                                      contentPadding:
-                                          EdgeInsets.only(top: 15),
-                                      hintText: 'Delivey address',
                                     ),
                                   ),
                                 ),
@@ -219,14 +219,15 @@ class _RegisterState extends State<Register> {
                                   elevation: 5.0,
                                   borderRadius: BorderRadius.circular(25),
                                   child: TextFormField(
+                                    obscureText: true,
                                     controller: TextEditingController(
-                                        text: user.full_name),
+                                        text: user.password),
                                     onChanged: (value) {
-                                      user.full_name = value;
+                                      user.password = value;
                                     },
                                     validator: (String? value) {
                                       if (value!.isEmpty) {
-                                        return 'Name is Required';
+                                        return 'Password is Required';
                                       } else {
                                         return null;
                                       }
@@ -234,12 +235,12 @@ class _RegisterState extends State<Register> {
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       prefixIcon: Icon(
-                                        Icons.person,
+                                        Icons.lock,
                                         color: Color.fromARGB(255, 46, 46, 46),
                                       ),
                                       contentPadding:
                                           EdgeInsets.only(top: 15),
-                                      hintText: 'Full name',
+                                      hintText: 'Password',
                                     ),
                                   ),
                                 ),
@@ -271,7 +272,7 @@ class _RegisterState extends State<Register> {
                                       ),
                                       contentPadding:
                                           EdgeInsets.only(top: 15),
-                                      hintText: 'Password',
+                                      hintText: 'Confirm Password',
                                     ),
                                   ),
                                 ),

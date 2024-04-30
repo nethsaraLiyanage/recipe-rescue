@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:recipe_rescue/pages/Login.dart';
 import 'package:recipe_rescue/pages/Register.dart';
+import 'package:recipe_rescue/pages/meal.dart';
 import 'package:recipe_rescue/pages/notifications_screen.dart';
 import 'package:recipe_rescue/pages/profile_screen.dart';
 import 'package:recipe_rescue/pages/questions.dart';
+import 'package:recipe_rescue/pages/recipe.dart';
+import 'package:recipe_rescue/pages/recipe_book.dart';
+import 'package:recipe_rescue/pages/saved.dart';
 import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/pages/splash_page.dart';
+import 'package:recipe_rescue/pages/thankyou_screen.dart';
 import 'package:recipe_rescue/pages/welcome_screen.dart';
 
 import 'pages/home_screen.dart';
@@ -34,7 +39,12 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => const WelcomeScreen(),
         '/questions': (context) => const QuestionScreen(),
         '/notifications': (context) => const NotificationsScreen(),
-        // '/servings': (context) => const ServingsScreen(),
+        '/servings': (context) => const ServingsScreen(),
+        '/thankyou': (context) => const ThankYouScreen(),
+        '/recipe': (context) => const Recipe(),
+        '/meal': (context) => const MealScreen(),
+        '/saved': (context) => const SavedScreen(),
+        '/recipebook': (context) => const RecipeBookScreen(),
       },
     );
   }

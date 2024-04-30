@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:recipe_rescue/model/tech_models.dart';
+import 'package:recipe_rescue/pages/recipe_book.dart';
+import 'package:recipe_rescue/pages/saved.dart';
 import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/widgets/custom_appbar.dart';
 import 'package:recipe_rescue/widgets/progress_bar.dart';
 
 class HomeScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const HomeScreen({super.key});
 
   @override
@@ -61,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen>
       },
       {
         'icon': 'assets/images/saved.png',
-        'title': 'Servings',
+        'title': 'Saved',
       },
       {'icon': 'assets/images/recipe_book.png', 
         'title': 'Recipe Book'
@@ -76,22 +79,29 @@ class _HomeScreenState extends State<HomeScreen>
       if (title == 'Profile') {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (ctx) => ProfileScreen(),
+            builder: (ctx) => const ProfileScreen(),
           ),
         );
       }
-      if (title == 'Servings') {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (ctx) => ServingsScreen(),
-        //   ),
-        // );
+      if (title == 'Saved') {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => const SavedScreen(),
+          ),
+        );
+      }
+      if (title == 'Recipe Book') {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => const RecipeBookScreen(),
+          ),
+        );
       }
     }
     void onNotifications() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => NotificationsScreen(),
+          builder: (ctx) => const NotificationsScreen(),
         ),
       );
     }
@@ -166,14 +176,25 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ...items.map(
-                      (e) => SizedBox(
-                        width: e.icon.width,
+                      (e) => GestureDetector(
+                        onTap: (){
+                          if(e.name == "Breakfast"){
+                            Navigator.pushNamed(context, '/meal');
+                          }
+                          else if(e.name == "Lunch"){
+                            Navigator.pushNamed(context, '/recipe');
+                          }
+                          else if(e.name == "Dinner"){
+                            Navigator.pushNamed(context, '/servings');
+                          }
+                        },
                         child: Column(
                           children: [
                             e.icon,
                             // Text(e.name),
                           ],
                         ),
+                        
                       ),
                     ),
                   ],
@@ -210,6 +231,7 @@ class _HomeScreenState extends State<HomeScreen>
                               e,
                               fit: BoxFit.fitHeight,
                             ),
+                            
                           );
                         }),
                       )

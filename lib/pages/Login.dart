@@ -12,6 +12,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class Login extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const Login({super.key});
 
   @override

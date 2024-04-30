@@ -1,9 +1,19 @@
+import 'package:recipe_rescue/pages/thankyou_screen.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_rescue/pages/home_screen.dart';
 
 class QuestionScreen extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const QuestionScreen({super.key});
+
+  final String selectedRadio = '';
+
+  setSelectedRadio(String val) {
+    setState(() {
+      // selectedRadio = val;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +21,7 @@ class QuestionScreen extends StatelessWidget {
   void onGetStarted() {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (ctx) => const HomeScreen(),
+            builder: (ctx) => const ThankYouScreen(),
           ),
           (route) => false);
     }
@@ -52,14 +62,45 @@ class QuestionScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      'Is there any household food wastage generated currently ?',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w200,
-                            fontSize: 16,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Is there any household food wastage generated currently ?',
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("option 01");
+                              },
+                            ),
+                            const Text(
+                              'Yes',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Radio(
+                              value: 2,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("option 01");
+                              },
+                            ),
+                            const Text(
+                              'No',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
                   )
                 ],
               ),
@@ -84,14 +125,73 @@ class QuestionScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:const EdgeInsets.all(20.0),
-                    child: Text(
-                      'Select the household wastage that generates:',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w200,
-                            fontSize: 16,
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Select the household wastage that generates:',
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                          ),
+                          textAlign: TextAlign.start,
                         ),
-                    ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("20%");
+                              },
+                            ),
+                            const Text(
+                              '20%',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Radio(
+                              value: 2,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("40%");
+                              },
+                            ),
+                            const Text(
+                              '40%',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("80%");
+                              },
+                            ),
+                            const Text(
+                              '80%',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Radio(
+                              value: 2,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("95%");
+                              },
+                            ),
+                            const Text(
+                              '95%',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
                   )
                 ],
               ),
@@ -116,14 +216,51 @@ class QuestionScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:const EdgeInsets.all(20.0),
-                    child: Text(
-                      'Select the type of food wastes raw ingredients :',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w200,
-                            fontSize: 16,
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Select the type of food wastes raw ingredients :',
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                          ),
+                          textAlign: TextAlign.start,
                         ),
-                    ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("option 01");
+                              },
+                            ),
+                            const Text(
+                              'Row Ingredients',
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: selectedRadio,
+                              onChanged: (val) {
+                                setSelectedRadio("option 01");
+                              },
+                            ),
+                            const Text(
+                              'Cooked Meals',
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        )
+                      ],
+                    )
                   )
                 ],
               ),
@@ -148,4 +285,6 @@ class QuestionScreen extends StatelessWidget {
       ),
     );
   }
+
+  void setState(Null Function() param0) {}
 }

@@ -1,14 +1,14 @@
 import 'package:recipe_rescue/model/notification_model.dart';
 import 'package:flutter/material.dart';
 
-class ServingsScreen extends StatefulWidget {
-  const ServingsScreen({super.key});
+class SavedScreen extends StatefulWidget {
+  const SavedScreen({super.key});
 
   @override
-  State<ServingsScreen> createState() => _ServingsScreen();
+  State<SavedScreen> createState() => _SavedScreen();
 }
 
-class _ServingsScreen extends State<ServingsScreen> {
+class _SavedScreen extends State<SavedScreen> {
   final notifications = [
     LocalNotification(
       title: 'New Recipe Alerts',
@@ -60,7 +60,7 @@ class _ServingsScreen extends State<ServingsScreen> {
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              'assets/images/servings.png',
+              'assets/images/save_screen.png',
               fit: BoxFit.fill,
             ),
           ),
