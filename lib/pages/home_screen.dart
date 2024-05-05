@@ -44,13 +44,6 @@ class _HomeScreenState extends State<HomeScreen>
       Tech(name: 'Brunch', icon: Image.asset('assets/images/brunch.png')),
       Tech(name: 'Dinner', icon: Image.asset('assets/images/dinner.png')),
     ];
-
-    // var detailItems = [
-    //   Tech(name: 'Chicken Curry 01', icon: Image.asset('assets/images/chicken_curry1.png')),
-    //   Tech(name: 'Chicken Curry 02', icon: Image.asset('assets/images/chicken_curry1.png')),
-    //   Tech(name: 'Chicken Curry 03', icon: Image.asset('assets/images/chicken_curry1.png')),
-    //   Tech(name: 'Chicken Curry 04', icon: Image.asset('assets/images/chicken_curry1.png')),
-    // ];
     var detailItems = [
       'assets/images/chicken_curry1.png',
       'assets/images/chicken_curry1.png',
