@@ -1,4 +1,3 @@
-import 'package:recipe_rescue/model/notification_model.dart';
 import 'package:flutter/material.dart';
 
 class SavedScreen extends StatefulWidget {
@@ -9,40 +8,9 @@ class SavedScreen extends StatefulWidget {
 }
 
 class _SavedScreen extends State<SavedScreen> {
-  final notifications = [
-    LocalNotification(
-      title: 'New Recipe Alerts',
-      time: '1m',
-      content:
-          '🎉 New recipes just added! Check out our latest creations including Spicy Thai Noodle Salad and Lemon Garlic Butter Salmon',
-      isRead: false,
-    ),
-    LocalNotification(
-      title: 'Recipe Recommendations',
-      time: '15m',
-      content:
-          '🌟 Recommended for you: One-Pot Creamy Tuscan Chicken Pasta. Perfect for a cozy night in! Click to view the recipe',
-      isRead: false,
-    ),
-    LocalNotification(
-      title: 'Weekly Meal Plans',
-      time: '1h',
-      content:
-          '🍽️ This week\'s meal plan is here! From hearty breakfast burritos to flavorful chicken stir-fry, we\'ve got your meals covered. Tap to see the plan.',
-      isRead: true,
-    ),
-    LocalNotification(
-      title: 'Cooking Tips and Tricks',
-      time: '6h',
-      content:
-          '👩‍🍳 Tip of the day: Try using cold butter when making pie crusts for a flakier texture. Learn more about pie-making techniques in our latest blog post!',
-      isRead: true,
-    ),
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(

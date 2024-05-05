@@ -7,9 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:recipe_rescue/model/tech_models.dart';
 import 'package:recipe_rescue/pages/recipe_book.dart';
 import 'package:recipe_rescue/pages/saved.dart';
-import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/widgets/custom_appbar.dart';
-import 'package:recipe_rescue/widgets/progress_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors

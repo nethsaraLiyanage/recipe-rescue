@@ -159,6 +159,7 @@ class _RegisterState extends State<Register> {
                                       user.email = value;
                                     },
                                     validator: (String? value) {
+                                      // ignore: unnecessary_null_comparison
                                       if (value!.isEmpty && value == null) {
                                         return 'Email is Required';
                                       } else if (RegExp(

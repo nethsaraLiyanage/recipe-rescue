@@ -1,4 +1,3 @@
-import 'package:recipe_rescue/model/notification_model.dart';
 import 'package:flutter/material.dart';
 
 class RecipeBookScreen extends StatefulWidget {
@@ -13,7 +12,6 @@ class _RecipeBookScreen extends State<RecipeBookScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(

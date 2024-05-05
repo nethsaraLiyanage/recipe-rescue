@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'package:recipe_rescue/model/notification_model.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,6 @@ class _Recipe extends State<Recipe> {
   
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(

@@ -1,7 +1,6 @@
 import 'package:recipe_rescue/pages/thankyou_screen.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_rescue/pages/home_screen.dart';
 
 class QuestionScreen extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
