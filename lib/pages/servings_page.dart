@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:recipe_rescue/pages/recipe_screen.dart';
-import 'package:recipe_rescue/utils/connection.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:recipe_rescue/widgets/waiting-popup.dart';
 import 'package:http/http.dart' as http;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recipe_rescue/api/http_service_saved.dart';
 import 'package:recipe_rescue/model/Recipe.dart';
 
@@ -31,9 +30,9 @@ class _SavedScreen extends State<SavedScreen> {
         future: _HttpServiceSaved.getSaved(),
         builder:
           (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
+          print(snapshot);
           if (snapshot.hasData) {
             List<Recipe>? recipes = snapshot.data;
-            print(recipes);
             return (Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Container(
@@ -161,7 +160,7 @@ class _SavedScreen extends State<SavedScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 15.0),
+                              const SizedBox(height: 15.0),
                             ]),
                           )
                           .toList()
@@ -175,7 +174,18 @@ class _SavedScreen extends State<SavedScreen> {
 
             );
           }
-          return const Center(child: CircularProgressIndicator());
+          return (
+            const Center(
+              child: Text(
+                "You have no saved recipes!",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 58, 58, 58),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            )
+          );
         }),
     );
   }

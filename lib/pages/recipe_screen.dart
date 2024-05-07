@@ -1,9 +1,12 @@
 // ignore_for_file: unused_import
+import 'dart:async';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:recipe_rescue/api/http_service_recipe.dart';
 import 'package:recipe_rescue/model/Recipe.dart';
 import 'package:recipe_rescue/model/notification_model.dart';
 import 'package:recipe_rescue/pages/recipe.dart';
+import 'package:recipe_rescue/pages/try_again_screen.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +43,10 @@ class _RecipeScreen extends State<RecipeScreen> {
     // TODO: implement initState
     super.initState();
     getIngredients();
+
+    Timer(const Duration(seconds: 5), () {
+      
+    });
   }
   
   @override
@@ -220,7 +227,7 @@ class _RecipeScreen extends State<RecipeScreen> {
                   )
                 );
               }
-              return const Center(child: CircularProgressIndicator());
+              return const TryAgainScreen();
             }),
     );
   }

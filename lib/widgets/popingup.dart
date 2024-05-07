@@ -10,7 +10,7 @@ class FavouriteRecycles extends StatefulWidget {
     
   });
 
-  final List<RecycleLocation> recycleLocations;
+  final String recycleLocations;
 
   @override
   State<FavouriteRecycles> createState() => _NewIngredientsState();
@@ -27,11 +27,6 @@ class _NewIngredientsState extends State<FavouriteRecycles> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                // ...widget.recycleLocations
-                //     .map((e) => SizedBox(
-                //           child: 
-                //         ))
-                //     .toList(),
                 Text(
                   'Ingredients',
                   style: Theme.of(context)

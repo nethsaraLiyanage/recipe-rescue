@@ -1,4 +1,5 @@
 // ignore: unused_import
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:recipe_rescue/model/Recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_rescue/pages/feedback.dart';
@@ -20,17 +21,26 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePage extends State<RecipePage> {
+  final storage = const FlutterSecureStorage();
 
-  void _openFavouriteOverlay() {
+  _openFavouriteOverlay(String ingredients) {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => const FavouriteRecycles(
-        recycleLocations: [],
+        recycleLocations: "",
       ),
     );
   }
+
+  @override
+  Future<void> initState() async {
+    // TODO: implement initState
+    super.initState();
+    await storage.write(key: "rceipeId", value: widget.recipe_passed.id);
+  }
+
   void onFeedback() {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
@@ -68,7 +78,7 @@ class _RecipePage extends State<RecipePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Test Recipe Name',
+                    widget.recipe_passed.name,
                     style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -121,7 +131,7 @@ class _RecipePage extends State<RecipePage> {
                             child: Image.asset('assets/images/star.png'),
                           ),
                           Text(
-                            '5.0',
+                            widget.recipe_passed.rating,
                             style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -142,7 +152,7 @@ class _RecipePage extends State<RecipePage> {
                             child: Image.asset('assets/images/cal.png'),
                           ),
                           Text(
-                            '500 Kcal',
+                            widget.recipe_passed.calories,
                             style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -177,7 +187,7 @@ class _RecipePage extends State<RecipePage> {
                         ),
                       ),
                       Text(
-                        '5.0',
+                        widget.recipe_passed.protiens,
                         style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -201,7 +211,7 @@ class _RecipePage extends State<RecipePage> {
                         ),
                       ),
                       Text(
-                        '5.0',
+                        widget.recipe_passed.fats,
                         style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -225,7 +235,7 @@ class _RecipePage extends State<RecipePage> {
                         ),
                       ),
                       Text(
-                        '5.0',
+                        widget.recipe_passed.carbohydrates,
                         style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -294,7 +304,7 @@ class _RecipePage extends State<RecipePage> {
                                   ),
                                 ),
                                 Text(
-                                  '10 mins',
+                                  widget.recipe_passed.cookingTime,
                                   style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -318,7 +328,7 @@ class _RecipePage extends State<RecipePage> {
                                   ),
                                 ),
                                 Text(
-                                  '10 mins',
+                                  widget.recipe_passed.preparationTime,
                                   style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -365,7 +375,7 @@ class _RecipePage extends State<RecipePage> {
                                           Container(
                                             margin: const EdgeInsets.only(left: 140),
                                             child: InkWell(
-                                              onTap: _openFavouriteOverlay,
+                                              onTap: _openFavouriteOverlay(widget.recipe_passed.ingredients),
                                               child: Image.asset('assets/images/up-arrow.png'),
                                             ),
                                           )

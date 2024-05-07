@@ -8,7 +8,7 @@ import 'package:recipe_rescue/utils/connection.dart';
 class HttpServiceRecipe {
 
   Future<List<Recipe>> getRecipes(List<String?> ingredients) async {
-    Response res = await post(Uri.parse("${Connection.baseUrl}/api/api/recipe"),
+    Response res = await post(Uri.parse("${Connection.baseUrl}/api/recipe/getRecipesByIngredientsFilter"),
       headers: <String, String>{
         'Content-Type': 'application/json;charSet=UTF-8'
       },

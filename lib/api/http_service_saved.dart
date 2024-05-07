@@ -10,11 +10,9 @@ class HttpServiceSaved {
     Response res = await get(Uri.parse("${Connection.baseUrl}/api/recipe/getSavedRecipes"));
     if (res.statusCode == 200) {
       log(res.body);
-      List<dynamic> body = jsonDecode(res.body);
-      print(res.body);
-
-      List<Recipe> savedRecipes = body.map((dynamic item) => Recipe.fromJson(item)).toList();
-
+      final responsebody=jsonDecode(res.body) as List;
+      print(responsebody);
+      List<Recipe> savedRecipes = responsebody.map((dynamic item) => Recipe.fromJson(item)).toList();
       return savedRecipes;
     } else {
       debugPrint('error');

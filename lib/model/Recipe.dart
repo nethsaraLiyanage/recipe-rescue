@@ -1,4 +1,5 @@
 class Recipe {
+  late String id;
   late String name;
   late String imageUrl;
   late String rating;
@@ -14,7 +15,8 @@ class Recipe {
   late String cookingTime;
 
   Recipe({
-    name,
+    required this.id,
+    required this.name,
     required this.imageUrl,
     required this.rating,
     required this.protiens,
@@ -31,6 +33,7 @@ class Recipe {
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
+      id : json['id'],
       name : json['name'],
       imageUrl : json['imageUrl'],
       rating : json['rating'],

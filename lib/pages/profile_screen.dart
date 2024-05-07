@@ -23,14 +23,6 @@ class ProfileScreen extends StatelessWidget {
       Navigator.pushNamed(context, '/login');
     }
 
-    final buttons = [
-      'Account',
-      'Settings',
-      'Privacy Policies',
-      'App Info',
-      'Logout'
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text(

@@ -49,7 +49,7 @@ class _RegisterState extends State<Register> {
       showTopSnackBar(
         Overlay.of(context),
         const CustomSnackBar.error(
-          message: "Something went rong!",
+          message: "Something went Wrong!",
         ),
       );
     }

@@ -16,6 +16,7 @@ import 'package:recipe_rescue/pages/saved.dart';
 import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/pages/splash_page.dart';
 import 'package:recipe_rescue/pages/thankyou_screen.dart';
+import 'package:recipe_rescue/pages/try_again_screen.dart';
 import 'package:recipe_rescue/pages/welcome_screen.dart';
 import 'package:recipe_rescue/pages/feedback.dart';
 
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/thankyou': (context) => const ThankYouScreen(),
         '/recipe': (context) => RecipePage(
           recipe_passed: Recipe(
+            id: '',
             name: '',
             imageUrl: '',
             rating: '',
@@ -74,6 +76,7 @@ class MyApp extends StatelessWidget {
         '/recipebook': (context) => const RecipeBookScreen(),
         '/recipeList': (context) => RecipeScreen(),
         '/feedback': (context) => const FeedbackScreen(),
+        '/oops': (context) => const TryAgainScreen(),
       },
     );
   }
