@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:recipe_rescue/auth/Auth.dart';
+import 'package:recipe_rescue/pages/home_screen.dart';
 import 'package:recipe_rescue/utils/connection.dart';
+import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -26,21 +28,20 @@ class _LoginState extends State<Login> {
   int currentIndex = 1;
 
   Future login() async {
-    var res = await http.post(Uri.parse("${Connection.baseUrl}/user/login"),
+    print("Called login() "+user.password.toString());
+    var res = await http.post(Uri.parse("${Connection.baseUrl}/api/auth"),
         headers: <String, String>{
           'Content-Type': 'application/json;charSet=UTF-8'
         },
         body: jsonEncode(
             <String, String>{'email': user.email, 'password': user.password}));
     var result = await jsonDecode(res.body);
+    print(result);
     if (result['status'] == 200) {
-      var userID = result['user']['_id'];
-      print(result['user']['deliveryAddress']);
+      var userID = result['user']['userId'];
       await Auth.rememberUser(userID);
-      await storage.write(
-          key: "address", value: result['user']['deliveryAddress']);
       showTopSnackBar(
-        context as OverlayState,
+        Overlay.of(context),
         const CustomSnackBar.success(
           message: "Successfilly Logged In",
         ),
@@ -49,7 +50,7 @@ class _LoginState extends State<Login> {
       Navigator.pushNamed(context, '/welcome');
     } else if (result['status'] == 401) {
       showTopSnackBar(
-        context as OverlayState,
+        Overlay.of(context),
         const CustomSnackBar.error(
           message:
               "Incorrect email or password. Please check your credentials and try again",
@@ -57,14 +58,14 @@ class _LoginState extends State<Login> {
       );
     } else if (result['status'] == 404) {
       showTopSnackBar(
-        context as OverlayState,
+        Overlay.of(context),
         const CustomSnackBar.error(
           message: "User does not exist!",
         ),
       );
     } else {
       showTopSnackBar(
-        context as OverlayState,
+        Overlay.of(context),
         const CustomSnackBar.error(
           message: "Something went wrong!",
         ),
@@ -73,30 +74,31 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> rememberUser(String id) async {
-    await storage.write(key: "user_id", value: id);
+    await storage.write(key: "userId", value: id);
   }
 
   Future<String> getUserId() async {
-    var userId = storage.read(key: "user_id").toString();
+    var userId = storage.read(key: "userId").toString();
     return userId;
   }
 
-  User user = User('', '', '', '', '', []);
+  User user = User('', '', '', '');
 
   @override
   Widget build(BuildContext context) {
+
+    void onLogin() {
+      if (_formKey.currentState!.validate()) {
+        login();
+      }
+    }
+    
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             SizedBox(
               height: 180,
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage('assets/images/wave2.png'),
-              //     fit: BoxFit.fill
-              //   )
-              // ),
               child: Stack(
                 children: <Widget>[
                   Positioned(
@@ -223,27 +225,17 @@ class _LoginState extends State<Login> {
                     child: const Text("Forgot Password ?"),
                   ),
                   const SizedBox(height: 10),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: const Color.fromARGB(255, 0, 0, 0),
-                      padding: const EdgeInsets.all(15.0), 
-                      disabledForegroundColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.38),
-                      // minimumSize: Size(MediaQuery.of(context).size.width-20,200.0),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            color: Color(0xFFFFC941),
-                            width: 1,
-                            style: BorderStyle.solid),
-                        borderRadius: BorderRadius.circular(50)),
-                    ),  
-                    onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   login();
-                      // }
-                       Navigator.pushNamed(context, '/welcome');
-                    },
-                    child:
-                        const Text('Login', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+                  CustomElevatedButton(
+                    onButtonPressed: onLogin,
+                    height: 45,
+                    width: 180,
+                    childWidget: Text(
+                      'LogIn',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   SignInButton(

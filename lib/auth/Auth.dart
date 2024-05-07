@@ -8,27 +8,26 @@ import 'package:email_auth/email_auth.dart';
 
 class Auth {
   static final storage = new FlutterSecureStorage();
-  static User user = User('', '', '', '', '', []);
+  static User user = User('', '', '', '');
   static EmailAuth emailAuth = new EmailAuth(sessionName: "Sample session");
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _otpController = TextEditingController();
 
 //Remember user for next login
   static Future<void> rememberUser(String id) async {
-    await storage.write(key: "user_id", value: id);
+    await storage.write(key: "userId", value: id);
   }
 
 //Get the current user id
   static Future<String> getUserId() async {
-    var user_id = await storage.read(key: "user_id");
-    return user_id.toString();
+    var userId = await storage.read(key: "userId");
+    return userId.toString();
   }
 
 //Check if user is previously logged in
   static Future<bool> isLoggedIn() async {
-    String? user_id = await storage.read(key: "user_id");
-    print(user_id);
-    if (user_id == null) {
+    String? userId = await storage.read(key: "userId");
+    print(userId);
+    if (userId == null) {
       return false;
     } else {
       return true;
@@ -46,16 +45,8 @@ class Auth {
     user.full_name = await result['user']['fullName'];
     user.email = await result['user']['email'];
     user.mobile_number = await result['user']['mobileNumber'];
-    user.delivery_address = await result['user']['deliveryAddress'];
-    List orders = await result['orders'];
-    user.orders = orders;
 
     return user;
-  }
-
-  static void sendOTp() async {
-    //var email = await storage.read(key: "email");
-    var res = await emailAuth.sendOtp(recipientMail: "udithaj.98@gmail.com");
   }
 
   static bool verifyOtp(String otp)  {

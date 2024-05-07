@@ -106,135 +106,141 @@ class _HomeScreenState extends State<HomeScreen>
             fit: BoxFit.cover,
           ),
           SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 8),
-                CustomAppBar(
-                  onTap: onNotifications,
-                ),
-                const SizedBox(height: 35), 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        'Get cooking today !',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300,
-                            ),
-                      ),
-                    ),
-                    
-                  ],
-                ),                
-                const SizedBox(height: 2),
-                const Divider(color: Colors.black26),
-                const SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Text(
-                        '',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'See all',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey,
-                                    ),
-                          )),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ...items.map(
-                      (e) => GestureDetector(
-                        onTap: (){
-                          if(e.name == "Breakfast"){
-                            Navigator.pushNamed(context, '/meal');
-                          }
-                          else if(e.name == "Lunch"){
-                            Navigator.pushNamed(context, '/recipe');
-                          }
-                          else if(e.name == "Dinner"){
-                            Navigator.pushNamed(context, '/servings');
-                          }
-                        },
-                        child: Column(
-                          children: [
-                            e.icon,
-                            // Text(e.name),
-                          ],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  CustomAppBar(
+                    onTap: onNotifications,
+                  ),
+                  const SizedBox(height: 35), 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          'Get cooking today !',
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w300,
+                              ),
                         ),
-                        
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        'Popular Recipes',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                            ),
+                      
+                    ],
+                  ),                
+                  const SizedBox(height: 2),
+                  const Divider(color: Colors.black26),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          '',
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       ),
-                    ),
-                    
-                  ],
-                ),
-                const SizedBox(height: 15),
-                CarouselSlider(
-                  items: detailItems
-                      .map(
-                        (e) => Builder(builder: (BuildContext context) {
-                          return Container(
-                            width: size.width,
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Image.asset(
-                              e,
-                              fit: BoxFit.fitHeight,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'See all',
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.grey,
+                                      ),
+                            )),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ...items.map(
+                          (e) => GestureDetector(
+                            onTap: (){
+                              if(e.name == "Breakfast"){
+                                Navigator.pushNamed(context, '/servings');
+                              }
+                              else if(e.name == "Lunch"){
+                                Navigator.pushNamed(context, '/servings');
+                              }
+                              else if(e.name == "Dinner"){
+                                Navigator.pushNamed(context, '/servings');
+                              }
+                              else if(e.name == "Brunch"){
+                                Navigator.pushNamed(context, '/servings');
+                              }
+                            },
+                            child: Column(
+                              children: [
+                                e.icon,
+                              ],
                             ),
                             
-                          );
-                        }),
-                      )
-                      .toList(),
-                  options: CarouselOptions(
-                    height: size.height * 0.28,
-                    enableInfiniteScroll: true,
-                    initialPage: 0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                
-              ],
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          'Popular Recipes',
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800,
+                              ),
+                        ),
+                      ),
+                      
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  CarouselSlider(
+                    items: detailItems
+                        .map(
+                          (e) => Builder(builder: (BuildContext context) {
+                            return Container(
+                              width: 300,
+                              margin: const EdgeInsets.symmetric(horizontal: 1),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Image.asset(
+                                e,
+                                fit: BoxFit.fill,
+                              ),
+                              
+                            );
+                          }),
+                        )
+                        .toList(),
+                    options: CarouselOptions(
+                      height: size.height * 0.4,
+                    ),
+                  ),
+                  
+                ],
+              )
             ),
           ),
         ],

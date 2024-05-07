@@ -30,7 +30,7 @@ class ThankYouScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 350),
+                const SizedBox(height: 380),
                 Text(
                   'Thank you\nfor the completing\nthe Survey !',
                   textAlign: TextAlign.center,
@@ -40,7 +40,7 @@ class ThankYouScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 120),
+                const SizedBox(height: 100),
                 CustomElevatedButton(
                   onButtonPressed: onNext,
                   height: 59,

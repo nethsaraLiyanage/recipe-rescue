@@ -44,6 +44,8 @@ dependencies:
   flutter_config: ^2.0.2
   carousel_slider: ^4.2.1
   google_fonts: ^6.2.1
+  confetti: ^0.7.0
+  loading_animation_widget: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +98,21 @@ flutter:
     - assets/images/meal.png
     - assets/images/save_screen.png
     - assets/images/recipe_book_screen.png
+    - assets/images/plus-icon.png
+    - assets/images/saved-colored-heart.png
+    - assets/images/saved-not-colored-heart.png
+    - assets/images/star-group.png
+    - assets/images/test.png
+    - assets/images/cal.png
+    - assets/images/white-curved-rectangle.png
+    - assets/images/ingredients.png
+    - assets/images/direction.png
+    - assets/images/up-arrow.png
+    - assets/images/feedback.png
+    - assets/images/feedback-thank.png
+    - assets/images/face01.png
+    - assets/images/face02.png
+    - assets/images/face03.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

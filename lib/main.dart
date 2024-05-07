@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
+import 'package:recipe_rescue/auth/Auth.dart';
+import 'package:recipe_rescue/model/Recipe.dart';
 
 import 'package:recipe_rescue/pages/Login.dart';
 import 'package:recipe_rescue/pages/Register.dart';
@@ -8,15 +11,23 @@ import 'package:recipe_rescue/pages/profile_screen.dart';
 import 'package:recipe_rescue/pages/questions.dart';
 import 'package:recipe_rescue/pages/recipe.dart';
 import 'package:recipe_rescue/pages/recipe_book.dart';
+import 'package:recipe_rescue/pages/recipe_screen.dart';
 import 'package:recipe_rescue/pages/saved.dart';
 import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/pages/splash_page.dart';
 import 'package:recipe_rescue/pages/thankyou_screen.dart';
 import 'package:recipe_rescue/pages/welcome_screen.dart';
+import 'package:recipe_rescue/pages/feedback.dart';
 
 import 'pages/home_screen.dart';
 
-void main() {
+bool loginState = true;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
+  await FlutterConfig.loadEnvVariables();
+  loginState = await Auth.isLoggedIn();
+  print(loginState);
   runApp(const MyApp());
 }
 
@@ -28,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: loginState ? '/' : '/login',
 
       routes: {
         '/': (context) => const SplashScreen(),
@@ -37,14 +48,32 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/welcome': (context) => const WelcomeScreen(),
-        '/questions': (context) => const QuestionScreen(),
+        '/questions': (context) => QuestionScreen(),
         '/notifications': (context) => const NotificationsScreen(),
         '/servings': (context) => const ServingsScreen(),
         '/thankyou': (context) => const ThankYouScreen(),
-        '/recipe': (context) => const Recipe(),
+        '/recipe': (context) => RecipePage(
+          recipe_passed: Recipe(
+            name: '',
+            imageUrl: '',
+            rating: '',
+            protiens: '',
+            fats: '',
+            carbohydrates: '',
+            ingredients: '',
+            direction: '',
+            calories: '',
+            season: '',
+            mealType: '',
+            preparationTime: '',
+            cookingTime: '',
+          ),
+        ),
         '/meal': (context) => const MealScreen(),
         '/saved': (context) => const SavedScreen(),
         '/recipebook': (context) => const RecipeBookScreen(),
+        '/recipeList': (context) => RecipeScreen(),
+        '/feedback': (context) => const FeedbackScreen(),
       },
     );
   }

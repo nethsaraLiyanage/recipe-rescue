@@ -1,172 +1,459 @@
 // ignore: unused_import
-import 'package:recipe_rescue/model/notification_model.dart';
+import 'package:recipe_rescue/model/Recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_rescue/pages/feedback.dart';
+import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
+import 'package:recipe_rescue/widgets/popingup.dart';
 
-class Recipe extends StatefulWidget {
-  const Recipe({super.key});
+// ignore: must_be_immutable
+class RecipePage extends StatefulWidget {
+  // ignore: non_constant_identifier_names
+  Recipe recipe_passed;
+  RecipePage({
+    super.key,
+    // ignore: non_constant_identifier_names
+    required this.recipe_passed,
+  });
 
   @override
-  State<Recipe> createState() => _Recipe();
+  State<RecipePage> createState() => _RecipePage();
 }
 
-class _Recipe extends State<Recipe> {
+class _RecipePage extends State<RecipePage> {
+
+  void _openFavouriteOverlay() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => const FavouriteRecycles(
+        recycleLocations: [],
+      ),
+    );
+  }
+  void onFeedback() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (ctx) => const FeedbackScreen(),
+        ),
+        (route) => false);
+  }
+
   
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Notification',
-      //     style: Theme.of(context).textTheme.titleLarge!.copyWith(
-      //           fontWeight: FontWeight.bold,
-      //           fontSize: 25,
-      //         ),
-      //   ),
-      //   centerTitle: true,
-      // ),
-      body: Stack(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.asset(
-              'assets/images/recipe.png',
-              fit: BoxFit.fill,
+      appBar: AppBar(
+        title: Text(
+          'Recipe',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        // width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 15,
             ),
-          ),
-          // Container(
-          //   margin: const EdgeInsets.symmetric(horizontal: 10),
-          //   width: double.infinity,
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.end,
-          //     children: [
-          //       const SizedBox(
-          //         height: 20,
-          //       ),
-          //       TextButton(
-          //         onPressed: () {},
-          //         child: Text(
-          //           'Mark as Read',
-          //           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-          //                 fontWeight: FontWeight.bold,
-          //                 fontSize: 16,
-          //                 color: const Color.fromARGB(255, 255, 0, 0),
-          //               ),
-          //         ),
-          //       ),
-          //       const SizedBox(
-          //         height: 10,
-          //       ),
-          //       SizedBox(
-          //         height: size.height * 0.7,
-          //         child: SingleChildScrollView(
-          //           child: Column(
-          //             children: notifications
-          //                 .map(
-          //                   (e) => Container(
-          //                     margin: const EdgeInsets.only(bottom: 25),
-          //                     padding: const EdgeInsets.all(12),
-          //                     width: double.infinity,
-          //                     height: size.height * 0.14,
-          //                     decoration: BoxDecoration(
-          //                       borderRadius: BorderRadius.circular(15),
-          //                       color: Colors.white,
-          //                       boxShadow: const [
-          //                         BoxShadow(
-          //                           blurRadius: 4,
-          //                         )
-          //                       ],
-          //                     ),
-          //                     child: Column(
-          //                       children: [
-          //                         Row(
-          //                           mainAxisAlignment:
-          //                               MainAxisAlignment.spaceBetween,
-          //                           children: [
-          //                             Text(
-          //                               e.title,
-          //                               style: Theme.of(context)
-          //                                   .textTheme
-          //                                   .bodyMedium!
-          //                                   .copyWith(
-          //                                     fontWeight: FontWeight.bold,
-          //                                     fontSize: 16,
-          //                                   ),
-          //                             ),
-          //                             Text(
-          //                               e.time,
-          //                               style: Theme.of(context)
-          //                                   .textTheme
-          //                                   .bodyMedium!
-          //                                   .copyWith(
-          //                                     fontWeight: FontWeight.bold,
-          //                                     fontSize: 15,
-          //                                     color: const Color.fromARGB(
-          //                                         255, 166, 166, 166),
-          //                                   ),
-          //                             ),
-          //                           ],
-          //                         ),
-          //                         Row(
-          //                           children: [
-          //                             SizedBox(
-          //                               width: size.width * 0.78,
-          //                               child: Text(
-          //                                 e.content,
-          //                                 style: Theme.of(context)
-          //                                     .textTheme
-          //                                     .bodyMedium!
-          //                                     .copyWith(
-          //                                       fontWeight: FontWeight.w400,
-          //                                       fontSize: 12,
-          //                                     ),
-          //                               ),
-          //                             ),
-          //                             const SizedBox(
-          //                               width: 16,
-          //                             ),
-          //                             if (!e.isRead)
-          //                               Container(
-          //                                 width: 10,
-          //                                 height: 10,
-          //                                 decoration: const BoxDecoration(
-          //                                     shape: BoxShape.circle,
-          //                                     color: Color.fromARGB(
-          //                                         255, 0, 86, 254)),
-          //                               )
-          //                           ],
-          //                         )
-          //                       ],
-          //                     ),
-          //                   ),
-          //                 )
-          //                 .toList(),
-          //           ),
-          //         ),
-          //       ),
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           InkWell(
-          //             child: Container(
-          //               height: 50,
-          //               width: 50,
-          //               decoration: const BoxDecoration(
-          //                 shape: BoxShape.circle,
-          //                 color: Colors.white,
-          //               ),
-          //               child: const Icon(
-          //                 Icons.delete_outlined,
-          //                 size: 40,
-          //               ),
-          //             ),
-          //           ),
-          //         ],
-          //       )
-          //     ],
-          //   ),
-          // ),
-        ],
+            Container(
+              padding: const EdgeInsets.only(left:30, right:30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Test Recipe Name',
+                    style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                    ),
+                  ),
+                  InkWell(
+                      child: Image.asset('assets/images/saved-not-colored-heart.png'),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              height: size.height * 0.3,
+              width: size.width * 0.9,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 248, 248, 248),
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 2,
+                    color: Colors.grey,
+                  )
+                ],
+                borderRadius: BorderRadius.circular(20),
+                image: const DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage('assets/images/test.png'),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.only(left: 100, right: 100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            child: Image.asset('assets/images/star.png'),
+                          ),
+                          Text(
+                            '5.0',
+                            style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            child: Image.asset('assets/images/cal.png'),
+                          ),
+                          Text(
+                            '500 Kcal',
+                            style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.only(left: 80, right: 80),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Proteins',
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        '5.0',
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Fats',
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        '5.0',
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Carbohydrates',
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        '5.0',
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                ],
+              ),
+            ),
+            Stack(
+              children: [
+                Image.asset(
+                  'assets/images/white-curved-rectangle.png',
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                  height: MediaQuery.of(context).size.width-140,
+                ),
+                SafeArea(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 15, bottom: 15),
+                        padding: const EdgeInsets.only(left: 80, right: 80),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  'Servings',
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  '4',
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  'Preperation',
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  '10 mins',
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  'Cook',
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  '10 mins',
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            
+                          ],
+                        ),
+                      ),
+                      Stack(
+                        children: [
+                          Image.asset(
+                            'assets/images/ingredients.png',
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                            height: MediaQuery.of(context).size.width-220,
+                          ),
+                          SafeArea(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 15, bottom: 15),
+                                  padding: const EdgeInsets.only(left: 60, right: 60),
+                                  child: Row(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Ingredients',
+                                            style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 20,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: const EdgeInsets.only(left: 140),
+                                            child: InkWell(
+                                              onTap: _openFavouriteOverlay,
+                                              child: Image.asset('assets/images/up-arrow.png'),
+                                            ),
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Stack(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/direction.png',
+                                      width: double.infinity,
+                                      fit: BoxFit.fill,
+                                      height: MediaQuery.of(context).size.width-250,
+                                    ),
+                                    SafeArea(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.only(top: 15, bottom: 15),
+                                            padding: const EdgeInsets.only(left: 60, right: 60),
+                                            child: Row(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Directions',
+                                                      style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                          fontWeight: FontWeight.w600,
+                                                          fontSize: 20,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      margin: const EdgeInsets.only(left: 150),
+                                                      child: InkWell(
+                                                        onTap: null,
+                                                        child: Image.asset('assets/images/up-arrow.png'),
+                                                      ),
+                                                    )
+                                                  ]
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 12,
+                                          ),
+                                          Container(
+                                            margin: const EdgeInsets.only(left: 50, right: 50),
+                                            child: CustomElevatedButton(
+                                              onButtonPressed: onFeedback,
+                                              height: 45,
+                                              width: 255,
+                                              childWidget: Text(
+                                                'Give Feedback',
+                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                              ),
+                                            )
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                        ],
+                                        )
+                                    )
+                                  ]
+                                )
+
+                              ],
+                            )
+                          )
+                        ]
+                      )
+                    ],
+                  )
+                )
+              ]
+            )
+          ],
+        ),
       ),
     );
   }

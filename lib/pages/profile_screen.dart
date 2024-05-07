@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -6,6 +9,19 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    final storage = new FlutterSecureStorage();
+
+    void logout() async {
+      await storage.delete(key: "userId");
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.success(
+          message: "Successfilly Logged Out",
+        ),
+      );
+      Navigator.pushNamed(context, '/login');
+    }
 
     final buttons = [
       'Account',
@@ -74,84 +90,6 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            // Container(
-            //   height: size.height * 0.0938,
-            //   width: size.width * 0.648,
-            //   decoration: BoxDecoration(
-            //     color: const Color.fromARGB(255, 248, 248, 248),
-            //     boxShadow: const [],
-            //     borderRadius: BorderRadius.circular(20),
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //     children: [
-            //       SizedBox(
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-            //             Row(
-            //               children: [
-            //                 Image.asset('assets/images/star.png'),
-            //                 Text(
-            //                   '1200',
-            //                   style: Theme.of(context)
-            //                       .textTheme
-            //                       .bodyLarge!
-            //                       .copyWith(
-            //                         fontWeight: FontWeight.bold,
-            //                         fontSize: 20,
-            //                       ),
-            //                 ),
-            //               ],
-            //             ),
-            //             Text(
-            //               'Total Points',
-            //               style:
-            //                   Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //                         fontSize: 16,
-            //                       ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       SizedBox(
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-            //             Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //               children: [
-            //                 Image.asset('assets/images/items.png'),
-            //                 Text(
-            //                   '500',
-            //                   style: Theme.of(context)
-            //                       .textTheme
-            //                       .bodyLarge!
-            //                       .copyWith(
-            //                         fontWeight: FontWeight.bold,
-            //                         fontSize: 20,
-            //                       ),
-            //                 ),
-            //               ],
-            //             ),
-            //             Text(
-            //               'Total Items',
-            //               style:
-            //                   Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //                         fontSize: 16,
-            //                       ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 25,
-            // ),
             Container(
               height: size.height * 0.342,
               width: size.width * 0.89,
@@ -167,43 +105,185 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // children: [
+                //   ...buttons
+                //       .map((e) => 
+                //       .toList(),
+                // ],
                 children: [
-                  ...buttons
-                      .map((e) => InkWell(
-                            onTap: () {},
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        e,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                      ),
-                                      const Icon(Icons.navigate_next),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: size.width * 0.75,
-                                  child: const Divider(
-                                    thickness: 2,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ))
-                      .toList(),
+                  InkWell(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25.0),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Account",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                              const Icon(Icons.navigate_next),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.75,
+                          child: const Divider(
+                            thickness: 2,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25.0),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Settings",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                              const Icon(Icons.navigate_next),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.75,
+                          child: const Divider(
+                            thickness: 2,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25.0),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Privacy Policies",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                              const Icon(Icons.navigate_next),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.75,
+                          child: const Divider(
+                            thickness: 2,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25.0),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "App Info",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                              const Icon(Icons.navigate_next),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.75,
+                          child: const Divider(
+                            thickness: 2,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      logout();
+                    },
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25.0),
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Log out",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                              const Icon(Icons.navigate_next),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.75,
+                          child: const Divider(
+                            thickness: 2,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                          
                 ],
               ),
             ),
