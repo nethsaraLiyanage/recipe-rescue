@@ -250,38 +250,6 @@ class _RegisterState extends State<Register> {
                                         ),
                                       ),
                                     ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.all(5),
-                                    //   child: Material(
-                                    //     elevation: 5.0,
-                                    //     borderRadius: BorderRadius.circular(25),
-                                    //     child: TextFormField(
-                                    //       obscureText: true,
-                                    //       controller: TextEditingController(
-                                    //           text: user.password),
-                                    //       onChanged: (value) {
-                                    //         user.password = value;
-                                    //       },
-                                    //       validator: (String? value) {
-                                    //         if (value!.isEmpty) {
-                                    //           return 'Password is Required';
-                                    //         } else {
-                                    //           return null;
-                                    //         }
-                                    //       },
-                                    //       decoration: const InputDecoration(
-                                    //         border: InputBorder.none,
-                                    //         prefixIcon: Icon(
-                                    //           Icons.lock,
-                                    //           color: Color.fromARGB(255, 46, 46, 46),
-                                    //         ),
-                                    //         contentPadding:
-                                    //             EdgeInsets.only(top: 15),
-                                    //         hintText: 'Confirm Password',
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               )

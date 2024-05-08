@@ -74,7 +74,9 @@ class MyApp extends StatelessWidget {
         '/meal': (context) => const MealScreen(),
         '/saved': (context) => const SavedScreen(),
         '/recipebook': (context) => const RecipeBookScreen(),
-        '/recipeList': (context) => RecipeScreen(),
+        '/recipeList': (context) => const RecipeScreen(
+          ingredients: [],
+        ),
         '/feedback': (context) => const FeedbackScreen(),
         '/oops': (context) => const TryAgainScreen(),
       },

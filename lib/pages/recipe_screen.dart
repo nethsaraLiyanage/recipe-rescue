@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 import 'dart:async';
 
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:recipe_rescue/api/http_service_recipe.dart';
 import 'package:recipe_rescue/model/Recipe.dart';
@@ -11,42 +12,47 @@ import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class RecipeScreen extends StatefulWidget {
-  const RecipeScreen({super.key});
+  const RecipeScreen({
+      super.key,
+      required this.ingredients
+  });
 
   @override
   State<RecipeScreen> createState() => _RecipeScreen();
+
+  final List<String> ingredients;
 }
 class _RecipeScreen extends State<RecipeScreen> {
   final HttpServiceRecipe _httpServiceRecipe = new HttpServiceRecipe();
   final storage = new FlutterSecureStorage();
-  void onStartCooking() {
-    // Navigator.of(context).pushAndRemoveUntil(
-    //   MaterialPageRoute(
-    //     builder: (ctx) => const Recipe(),
-    //   ),
-    //   (route) => false);
+  onStartCooking(Recipe recipe) {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (ctx) => RecipePage(recipe_passed: recipe),
+      ),
+      (route) => false);
   }
   
   List<String?> ingredients = [];
 
-  getIngredients() async {
-    await storage.read(key: "ingredients").then((value) {
-      setState(() {
-        ingredients = value as List<String>;
-      });
-    });
-    print(ingredients);
-  }
+  // getIngredients() async {
+  //   await storage.read(key: "ingredients").then((value) {
+  //     setState(() {
+  //       ingredients = widget.ingredients;
+  //     });
+  //   });
+  //   print(ingredients);
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getIngredients();
-
-    Timer(const Duration(seconds: 5), () {
-      
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (mounted) {
+    //     context.read<CampaignProvider>().getCampaigns();
+    //   }
+    // });
   }
   
   @override
@@ -64,171 +70,102 @@ class _RecipeScreen extends State<RecipeScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-            future: _httpServiceRecipe.getRecipes(ingredients),
-            builder:
-              (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
-              if (snapshot.hasData) {
-                List<Recipe>? recipes = snapshot.data;
-                return(
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // SizedBox(
-                          //   height: size.height * 0.8,
-                          //   child: SingleChildScrollView(
-                          //     child: Column(
-                          //       children: savedItems
-                          //           .map(
-                          //             (e) => Column(
-                          //               children: [
-                          //                 const SizedBox(
-                          //                   height: 15,
-                          //                 ),
-                          //                 Container(
-                          //                   height: size.height * 0.2,
-                          //                   width: size.width * 0.9,
-                          //                   decoration: BoxDecoration(
-                          //                     color: const Color.fromARGB(255, 248, 248, 248),
-                          //                     boxShadow: const [
-                          //                       BoxShadow(
-                          //                         blurRadius: 2,
-                          //                         color: Colors.grey,
-                          //                       )
-                          //                     ],
-                          //                     borderRadius: BorderRadius.circular(20),
-                          //                     image: const DecorationImage(
-                          //                       fit: BoxFit.cover,
-                          //                       image: AssetImage('assets/images/test.png'),
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //                 const SizedBox(
-                          //                   height: 10,
-                          //                 ),
-                          //                 Text(
-                          //                   'Test Recipe Name',
-                          //                   style: Theme.of(context)
-                          //                     .textTheme
-                          //                     .bodyMedium!
-                          //                     .copyWith(
-                          //                       fontWeight: FontWeight.w400,
-                          //                       fontSize: 22,
-                          //                   ),
-                          //                 ),
-                          //                 CustomElevatedButton(
-                          //                   onButtonPressed: onStartCooking,
-                          //                   height: 30,
-                          //                   width: 200,
-                          //                   childWidget: Text(
-                          //                     'Start Cooking',
-                          //                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          //                           fontSize: 20,
-                          //                           fontWeight: FontWeight.bold,
-                          //                         ),
-                          //                   ),
-                          //                 ),
-                          //                 const SizedBox(
-                          //                   height: 10,
-                          //                 ),
-                          //               ],
-                          //             )
-                          //           )
-                          //           .toList(),
-                          //     ),
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: size.height * 0.8,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: recipes!
-                                  .map(
-                                    (Recipe recipe) => Column(children: [
-                                      GestureDetector(
-                                        onTap: () => {
-                                          // Navigator.pushNamed(context, '/product')
-                                          Navigator.push(
-                                              context,
-                                              '/questions' as Route<Object?>
-                                          )
-                                        },
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Container(
-                                              height: size.height * 0.2,
-                                              width: size.width * 0.9,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(255, 248, 248, 248),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    blurRadius: 2,
-                                                    color: Colors.grey,
-                                                  )
-                                                ],
-                                                borderRadius: BorderRadius.circular(20),
-                                                image: const DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: AssetImage('assets/images/test.png'),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Test Recipe Name',
-                                              style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 22,
-                                              ),
-                                            ),
-                                            CustomElevatedButton(
-                                              onButtonPressed: onStartCooking,
-                                              height: 30,
-                                              width: 200,
-                                              childWidget: Text(
-                                                'Start Cooking',
-                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                                      fontSize: 20,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 15.0),
-                                    ]),
-                                  )
-                                  .toList()
-                                ),
-                            ),
-                          ),
-                        ],
+        future: _httpServiceRecipe.getRecipes(ingredients),
+        builder:
+          (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            print("Called-----------------wait-----------------!");
+            return const Center(child: CircularProgressIndicator());
+          } else if(snapshot.hasData) {
+            print("Called-----------------HAS-----------------!");
+            List<Recipe>? recipes = snapshot.data;
+            return(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                  )
-                );
-              }
-              return const TryAgainScreen();
-            }),
+                      SizedBox(
+                        height: size.height * 0.8,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: recipes!
+                              .map(
+                                (Recipe recipe) => Column(children: [
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    height: size.height * 0.2,
+                                    width: size.width * 0.9,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(255, 248, 248, 248),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          blurRadius: 2,
+                                          color: Colors.grey,
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: const DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage('assets/images/test.png'),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    recipe.name == null ? "-" : recipe.name!,
+                                    style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 22,
+                                    ),
+                                  ),
+                                  CustomElevatedButton(
+                                    onButtonPressed: () => {onStartCooking(recipe)},
+                                    height: 30,
+                                    width: 200,
+                                    childWidget: Text(
+                                      'Start Cooking',
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const SizedBox(height: 15.0),
+                                ]),
+                              )
+                              .toList()
+                            ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            );
+          } else if(!snapshot.hasData) {
+            print("Called-----------------NODATA-----------------!");
+            // When the task is done, show the fetched data
+            return Text('Fetched Data: ${snapshot.data}');
+          }
+          return Center(child: CircularProgressIndicator());
+        }),
     );
   }
 }

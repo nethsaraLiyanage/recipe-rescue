@@ -8,21 +8,30 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 class WaitPopup extends StatefulWidget {
   const WaitPopup({
     super.key,
+    required this.ingredients
   });
 
   @override
   State<WaitPopup> createState() => _WaitPopupState();
+
+  final List<String> ingredients;
 }
 
 class _WaitPopupState extends State<WaitPopup> {
 
+  changeRoute () async {
+    await Future.delayed(const Duration(seconds: 8), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RecipeScreen(ingredients: widget.ingredients)),
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 8), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => const RecipeScreen()));
-    });
+    changeRoute();
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_rescue/pages/home_screen.dart';
 import 'package:recipe_rescue/pages/servings_page.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button_red.dart';
 
@@ -16,10 +17,17 @@ class TryAgainScreen extends StatelessWidget {
           (route) => false);
     }
 
+    void onGoHome() {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (ctx) => const HomeScreen(),
+          ),
+          (route) => false);
+    }
+
     return Scaffold(
       body: Stack(
         children: [
-          
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -68,9 +76,7 @@ class TryAgainScreen extends StatelessWidget {
                     shape: const CircleBorder(
                       side: BorderSide(color: Colors.transparent)),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
+                  onPressed: onGoHome,
                   child: const Text("Got to Home"),
                 ),
               ],

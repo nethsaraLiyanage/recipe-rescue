@@ -11,8 +11,8 @@ class HttpServiceSaved {
     if (res.statusCode == 200) {
       log(res.body);
       final responsebody=jsonDecode(res.body) as List;
-      print(responsebody);
       List<Recipe> savedRecipes = responsebody.map((dynamic item) => Recipe.fromJson(item)).toList();
+      print(savedRecipes);
       return savedRecipes;
     } else {
       debugPrint('error');

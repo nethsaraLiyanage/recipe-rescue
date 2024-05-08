@@ -9,7 +9,7 @@ import 'package:recipe_rescue/widgets/popingup.dart';
 // ignore: must_be_immutable
 class RecipePage extends StatefulWidget {
   // ignore: non_constant_identifier_names
-  Recipe recipe_passed;
+  final Recipe recipe_passed;
   RecipePage({
     super.key,
     // ignore: non_constant_identifier_names
@@ -33,12 +33,14 @@ class _RecipePage extends State<RecipePage> {
       ),
     );
   }
+  void setUserIdLocal() async => await storage.write(key: "rceipeId", value: widget.recipe_passed.id);
+  
 
   @override
-  Future<void> initState() async {
+  void initState() {
     // TODO: implement initState
     super.initState();
-    await storage.write(key: "rceipeId", value: widget.recipe_passed.id);
+    setUserIdLocal();
   }
 
   void onFeedback() {
@@ -78,7 +80,7 @@ class _RecipePage extends State<RecipePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.recipe_passed.name,
+                    widget.recipe_passed.name!,
                     style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -131,7 +133,7 @@ class _RecipePage extends State<RecipePage> {
                             child: Image.asset('assets/images/star.png'),
                           ),
                           Text(
-                            widget.recipe_passed.rating,
+                            widget.recipe_passed.rating == null ? "-" : widget.recipe_passed.rating!,
                             style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -152,7 +154,7 @@ class _RecipePage extends State<RecipePage> {
                             child: Image.asset('assets/images/cal.png'),
                           ),
                           Text(
-                            widget.recipe_passed.calories,
+                            widget.recipe_passed.calories == null ? "-" : widget.recipe_passed.rating!,
                             style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -187,7 +189,7 @@ class _RecipePage extends State<RecipePage> {
                         ),
                       ),
                       Text(
-                        widget.recipe_passed.protiens,
+                        widget.recipe_passed.protiens == null ? "-" : widget.recipe_passed.protiens!,
                         style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -211,7 +213,7 @@ class _RecipePage extends State<RecipePage> {
                         ),
                       ),
                       Text(
-                        widget.recipe_passed.fats,
+                        widget.recipe_passed.fats == null ? "-" : widget.recipe_passed.fats!,
                         style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -235,7 +237,7 @@ class _RecipePage extends State<RecipePage> {
                         ),
                       ),
                       Text(
-                        widget.recipe_passed.carbohydrates,
+                        widget.recipe_passed.carbohydrates == null ? "-" : widget.recipe_passed.carbohydrates!,
                         style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -304,7 +306,7 @@ class _RecipePage extends State<RecipePage> {
                                   ),
                                 ),
                                 Text(
-                                  widget.recipe_passed.cookingTime,
+                                  widget.recipe_passed.cookingTime == null ? "-" : widget.recipe_passed.cookingTime!,
                                   style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -328,7 +330,7 @@ class _RecipePage extends State<RecipePage> {
                                   ),
                                 ),
                                 Text(
-                                  widget.recipe_passed.preparationTime,
+                                  widget.recipe_passed.preparationTime == null ? "-" : widget.recipe_passed.preparationTime!,
                                   style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -375,7 +377,7 @@ class _RecipePage extends State<RecipePage> {
                                           Container(
                                             margin: const EdgeInsets.only(left: 140),
                                             child: InkWell(
-                                              onTap: _openFavouriteOverlay(widget.recipe_passed.ingredients),
+                                              onTap:  () => {_openFavouriteOverlay (widget.recipe_passed.ingredients == null ? "-" : widget.recipe_passed.ingredients!)},
                                               child: Image.asset('assets/images/up-arrow.png'),
                                             ),
                                           )

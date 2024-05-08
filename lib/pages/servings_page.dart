@@ -25,19 +25,23 @@ class _ServingsScreen extends State<ServingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void openWaitPopupOverlay() {
+    void openWaitPopupOverlay(List<String> ingredients) {
       showModalBottomSheet(
         useSafeArea: true,
         isScrollControlled: true,
         context: context,
-        builder: (ctx) => const WaitPopup(),
+        builder: (ctx) => WaitPopup(
+          ingredients: ingredients,
+        ),
       );
     }
-    Future<void> onStart() async {
+
+    void onStart() async {
       if (_formKey.currentState!.validate()) {
         List<String> ingredients = [ingredient1, ingredient2, ingredient3, ingredient4];
-        await storage.write(key: 'ingredients', value: jsonEncode(ingredients));
-        openWaitPopupOverlay();
+        // await storage.write(key: 'ingredients', value: jsonEncode(ingredients));
+        // print(jsonEncode(ingredients));
+        openWaitPopupOverlay(ingredients);
       }
       
     }

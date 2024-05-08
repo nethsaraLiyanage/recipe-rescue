@@ -8,6 +8,7 @@ class QuestionScreen extends StatelessWidget {
   QuestionScreen({super.key});
 
   final bool selectedRadio = false;
+  final bool q1Selected = false;
   late final bool question01;
   final String question02 = "";
   final String question03 = "";
@@ -87,9 +88,9 @@ class QuestionScreen extends StatelessWidget {
                             children: <Widget>[
                               Radio(
                                 value: true,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("option 01");
+                                groupValue: q1Selected,
+                                onChanged: (value) {
+                                  setQ1Radio(value!);
                                 },
                               ),
                               const Text(
@@ -98,9 +99,9 @@ class QuestionScreen extends StatelessWidget {
                               ),
                               Radio(
                                 value: false,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("option 01");
+                                groupValue: q1Selected,
+                                onChanged: (value) {
+                                  setQ1Radio(value!);
                                 },
                               ),
                               const Text(

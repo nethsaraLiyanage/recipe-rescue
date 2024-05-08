@@ -12,8 +12,8 @@ class HttpServiceRecipe {
       headers: <String, String>{
         'Content-Type': 'application/json;charSet=UTF-8'
       },
-      body: jsonEncode(<String, String>{
-        "ingredients": jsonEncode(ingredients)
+      body: jsonEncode(<String, List<String?>>{
+        "ingredients": ingredients
       }
     ));
     if (res.statusCode == 200) {

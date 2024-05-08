@@ -30,9 +30,9 @@ class _SavedScreen extends State<SavedScreen> {
         future: _HttpServiceSaved.getSaved(),
         builder:
           (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
-          print(snapshot);
           if (snapshot.hasData) {
             List<Recipe>? recipes = snapshot.data;
+            print(recipes?[0].name);
             return (Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Container(
@@ -62,105 +62,106 @@ class _SavedScreen extends State<SavedScreen> {
                                 },
                                 child: Row(
                                   children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(bottom: 25),
-                                      padding: const EdgeInsets.all(12),
-                                      width: double.infinity,
-                                      height: size.height * 0.14,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 2,
-                                          )
-                                        ],
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  Container(
-                                                    height: size.height * 0.11,
-                                                    width: size.width * 0.2,
-                                                    decoration: BoxDecoration(
-                                                      color: const Color.fromARGB(255, 248, 248, 248),
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                          blurRadius: 2,
-                                                          color: Colors.grey,
-                                                        )
-                                                      ],
-                                                      borderRadius: BorderRadius.circular(20),
-                                                      image: const DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: AssetImage('assets/images/test.png'),
+                                    Expanded(
+                                      child: Container(
+                                        margin: const EdgeInsets.only(bottom: 25),
+                                        padding: const EdgeInsets.all(12),
+                                        width: double.infinity,
+                                        height: size.height * 0.14,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          color: Colors.white,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 2,
+                                            )
+                                          ],
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: size.height * 0.11,
+                                                      width: size.width * 0.2,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color.fromARGB(255, 248, 248, 248),
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            blurRadius: 2,
+                                                            color: Colors.grey,
+                                                          )
+                                                        ],
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        image: const DecorationImage(
+                                                          fit: BoxFit.fill,
+                                                          image: AssetImage('assets/images/test.png'),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      margin: const EdgeInsets.only(left:15, top:15, right: 10),
+                                                      width: size.width * 0.45,
+                                                      child: Text(
+                                                        recipe.name == null ? "-" : recipe.name!,
+                                                        style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                        ),
                                                       ),
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Container(
-                                                    margin: const EdgeInsets.only(left:15, top:15, right: 10),
-                                                    width: size.width * 0.45,
-                                                    child: Text(
-                                                      recipe.name,
+                                                    const SizedBox(
+                                                      height: 8,
+                                                    ),
+                                                    Container(
+                                                      alignment: Alignment.topLeft,
+                                                      child: InkWell(
+                                                        child: Image.asset('assets/images/star-group.png'),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      alignment: Alignment.centerRight,
+                                                      child: InkWell(
+                                                        child: Image.asset('assets/images/saved-colored-heart.png'),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text(
+                                                      recipe.mealType == null ? "-" : recipe.mealType!,
                                                       style: Theme.of(context)
                                                         .textTheme
                                                         .bodyMedium!
                                                         .copyWith(
                                                           fontWeight: FontWeight.bold,
-                                                          fontSize: 16,
+                                                          fontSize: 10,
                                                       ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Container(
-                                                    alignment: Alignment.topLeft,
-                                                    child: InkWell(
-                                                      child: Image.asset('assets/images/star-group.png'),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Container(
-                                                    alignment: Alignment.centerRight,
-                                                    child: InkWell(
-                                                      child: Image.asset('assets/images/saved-colored-heart.png'),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    recipe.mealType,
-                                                    style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 10,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ],
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 15.0),
                             ]),
                           )
                           .toList()
