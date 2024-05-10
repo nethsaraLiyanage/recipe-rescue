@@ -28,8 +28,8 @@ class _RecipePage extends State<RecipePage> {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      builder: (ctx) => const FavouriteRecycles(
-        recycleLocations: "",
+      builder: (ctx) => const IngredientsPopUp(
+        recycleLocations: "potatoes (peeled and cubed) - 4 medium, onions (chopped) - 1 medium, tomatoes (chopped) - 2 medium, curry powder - 1 tbsp, coconut milk (full-fat) - 1 cup",
       ),
     );
   }

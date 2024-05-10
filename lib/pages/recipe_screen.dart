@@ -25,6 +25,7 @@ class RecipeScreen extends StatefulWidget {
 class _RecipeScreen extends State<RecipeScreen> {
   final HttpServiceRecipe _httpServiceRecipe = new HttpServiceRecipe();
   final storage = new FlutterSecureStorage();
+  
   onStartCooking(Recipe recipe) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
@@ -33,26 +34,10 @@ class _RecipeScreen extends State<RecipeScreen> {
       (route) => false);
   }
   
-  List<String?> ingredients = [];
-
-  // getIngredients() async {
-  //   await storage.read(key: "ingredients").then((value) {
-  //     setState(() {
-  //       ingredients = widget.ingredients;
-  //     });
-  //   });
-  //   print(ingredients);
-  // }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (mounted) {
-    //     context.read<CampaignProvider>().getCampaigns();
-    //   }
-    // });
   }
   
   @override
@@ -70,14 +55,12 @@ class _RecipeScreen extends State<RecipeScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: _httpServiceRecipe.getRecipes(ingredients),
+        future: _httpServiceRecipe.getRecipes(widget.ingredients),
         builder:
           (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            print("Called-----------------wait-----------------!");
             return const Center(child: CircularProgressIndicator());
           } else if(snapshot.hasData) {
-            print("Called-----------------HAS-----------------!");
             List<Recipe>? recipes = snapshot.data;
             return(
               Padding(

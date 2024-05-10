@@ -60,14 +60,14 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     
     void onSignUp() {
-      // if (_formKey.currentState!.validate()) {
-      //   save();
-      // }
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (ctx) => QuestionScreen(),
-          ),
-          (route) => false);
+      if (_formKey.currentState!.validate()) {
+        save();
+      }
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(
+      //       builder: (ctx) => QuestionScreen(),
+      //     ),
+      //     (route) => false);
     }
     return Scaffold(
       body: SingleChildScrollView(
