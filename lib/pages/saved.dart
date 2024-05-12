@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_rescue/api/http_service_saved.dart';
 import 'package:recipe_rescue/model/Recipe.dart';
+import 'package:recipe_rescue/pages/recipe.dart';
 
 class SavedScreen extends StatefulWidget {
   const SavedScreen({super.key});
@@ -54,11 +55,11 @@ class _SavedScreen extends State<SavedScreen> {
                             (Recipe recipe) => Column(children: [
                               GestureDetector(
                                 onTap: () => {
-                                  // Navigator.pushNamed(context, '/product')
-                                  Navigator.push(
-                                      context,
-                                      '/questions' as Route<Object?>
-                                  )
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                      builder: (ctx) => RecipePage(recipe_passed: recipe),
+                                    ),
+                                    (route) => false)
                                 },
                                 child: Row(
                                   children: [
@@ -67,7 +68,7 @@ class _SavedScreen extends State<SavedScreen> {
                                         margin: const EdgeInsets.only(bottom: 25),
                                         padding: const EdgeInsets.all(12),
                                         width: double.infinity,
-                                        height: size.height * 0.14,
+                                        height: size.height * 0.15,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(15),
                                           color: Colors.white,
@@ -106,8 +107,8 @@ class _SavedScreen extends State<SavedScreen> {
                                                 Column(
                                                   children: [
                                                     Container(
-                                                      margin: const EdgeInsets.only(left:15, top:15, right: 10),
-                                                      width: size.width * 0.45,
+                                                      margin: const EdgeInsets.only(left:15, top:15),
+                                                      width: size.width * 0.40,
                                                       child: Text(
                                                         recipe.name == null ? "-" : recipe.name!,
                                                         style: Theme.of(context)

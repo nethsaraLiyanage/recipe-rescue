@@ -1,5 +1,6 @@
 import 'package:recipe_rescue/model/notification_model.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_rescue/pages/recipe_screen.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -11,11 +12,20 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   final notifications = [
     LocalNotification(
+      title: 'Mango Season is here!',
+      time: '1m',
+      content:
+          '🎉 New Seasonal Recipes are here! Check out for the recipes that suits for the mango season!',
+      isRead: false,
+      link: "link",
+    ),
+    LocalNotification(
       title: 'New Recipe Alerts',
       time: '1m',
       content:
           '🎉 New recipes just added! Check out our latest creations including Spicy Thai Noodle Salad and Lemon Garlic Butter Salmon',
       isRead: false,
+      link: "link",
     ),
     LocalNotification(
       title: 'Recipe Recommendations',
@@ -23,6 +33,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       content:
           '🌟 Recommended for you: One-Pot Creamy Tuscan Chicken Pasta. Perfect for a cozy night in! Click to view the recipe',
       isRead: false,
+      link: "link",
     ),
     LocalNotification(
       title: 'Weekly Meal Plans',
@@ -30,6 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       content:
           '🍽️ This week\'s meal plan is here! From hearty breakfast burritos to flavorful chicken stir-fry, we\'ve got your meals covered. Tap to see the plan.',
       isRead: true,
+      link: "link",
     ),
     LocalNotification(
       title: 'Cooking Tips and Tricks',
@@ -37,8 +49,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       content:
           '👩‍🍳 Tip of the day: Try using cold butter when making pie crusts for a flakier texture. Learn more about pie-making techniques in our latest blog post!',
       isRead: true,
+      link: "link",
     ),
   ];
+
+  void onNotificationTap (){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const RecipeScreen(ingredients: ["mango"])),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,82 +115,85 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       child: Column(
                         children: notifications
                             .map(
-                              (e) => Container(
-                                margin: const EdgeInsets.only(bottom: 25),
-                                padding: const EdgeInsets.all(12),
-                                width: double.infinity,
-                                height: size.height * 0.14,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      blurRadius: 4,
-                                    )
-                                  ],
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          e.title,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                        ),
-                                        Text(
-                                          e.time,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                color: const Color.fromARGB(
-                                                    255, 166, 166, 166),
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: size.width * 0.78,
-                                          child: Text(
-                                            e.content,
+                              (e) => InkWell(
+                                  onTap: onNotificationTap,
+                                  child: Container(
+                                  margin: const EdgeInsets.only(bottom: 25),
+                                  padding: const EdgeInsets.all(12),
+                                  width: double.infinity,
+                                  height: size.height * 0.14,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.white,
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        blurRadius: 4,
+                                      )
+                                    ],
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            e.title,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
                                                 .copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
                                                 ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          width: 16,
-                                        ),
-                                        if (!e.isRead)
-                                          Container(
-                                            width: 10,
-                                            height: 10,
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color.fromARGB(
-                                                    255, 0, 86, 254)),
-                                          )
-                                      ],
-                                    )
-                                  ],
+                                          Text(
+                                            e.time,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: const Color.fromARGB(
+                                                      255, 166, 166, 166),
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: size.width * 0.78,
+                                            child: Text(
+                                              e.content,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12,
+                                                  ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 16,
+                                          ),
+                                          if (!e.isRead)
+                                            Container(
+                                              width: 10,
+                                              height: 10,
+                                              decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color.fromARGB(
+                                                      255, 0, 86, 254)),
+                                            )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              )
                             )
                             .toList(),
                       ),

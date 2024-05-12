@@ -39,11 +39,8 @@ class _ServingsScreen extends State<ServingsScreen> {
     void onStart() async {
       if (_formKey.currentState!.validate()) {
         List<String> ingredients = [ingredient1, ingredient2, ingredient3, ingredient4];
-        // await storage.write(key: 'ingredients', value: jsonEncode(ingredients));
-        // print(jsonEncode(ingredients));
         openWaitPopupOverlay(ingredients);
       }
-      
     }
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -154,7 +151,7 @@ class _ServingsScreen extends State<ServingsScreen> {
                                     child: Image.asset('assets/images/plus-icon.png'),
                                   ),
                                   SizedBox(
-                                    width: 300,
+                                    width: 250,
                                     child: TextFormField(
                                       decoration: const InputDecoration(
                                         labelText: "Add Ingredient"
@@ -181,7 +178,7 @@ class _ServingsScreen extends State<ServingsScreen> {
                                     child: Image.asset('assets/images/plus-icon.png'),
                                   ),
                                   SizedBox(
-                                    width: 300,
+                                    width: 250,
                                     child: TextFormField(
                                       decoration: const InputDecoration(
                                         labelText: "Add Ingredient"
@@ -202,7 +199,7 @@ class _ServingsScreen extends State<ServingsScreen> {
                                     child: Image.asset('assets/images/plus-icon.png'),
                                   ),
                                   SizedBox(
-                                    width: 300,
+                                    width: 250,
                                     child: TextFormField(
                                       decoration: const InputDecoration(
                                         labelText: "Add Ingredient"
@@ -223,7 +220,7 @@ class _ServingsScreen extends State<ServingsScreen> {
                                     child: Image.asset('assets/images/plus-icon.png'),
                                   ),
                                   SizedBox(
-                                    width: 300,
+                                    width: 250,
                                     child: TextFormField(
                                       decoration: const InputDecoration(
                                         labelText: "Add Ingredient"

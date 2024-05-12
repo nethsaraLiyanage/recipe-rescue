@@ -19,7 +19,7 @@ class IngredientsPopUp extends StatefulWidget {
 class _NewIngredientsState extends State<IngredientsPopUp> {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (cyx, constraints) {
+    return LayoutBuilder(builder: (cyx, constraints) { 
       return SizedBox(
         width: double.infinity,
         child: SingleChildScrollView(

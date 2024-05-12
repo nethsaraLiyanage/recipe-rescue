@@ -13,6 +13,7 @@ class Recipe {
   late String? mealType;
   late String? preparationTime;
   late String? cookingTime;
+  late bool? isSaved;
 
   Recipe({
     required this.id,
@@ -29,6 +30,7 @@ class Recipe {
     required this.mealType,
     required this.preparationTime,
     required this.cookingTime,
+    required this.isSaved,
   });
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
@@ -46,7 +48,8 @@ class Recipe {
       season : json['season'],
       mealType : json['mealType'],
       preparationTime : json['preparationTime'],
-      cookingTime : json['cookingTime']
+      cookingTime : json['cookingTime'],
+      isSaved : json['isSaved']
     );
   }
 

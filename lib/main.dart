@@ -69,6 +69,7 @@ class MyApp extends StatelessWidget {
             mealType: '',
             preparationTime: '',
             cookingTime: '',
+            isSaved: false,
           ),
         ),
         '/meal': (context) => const MealScreen(),

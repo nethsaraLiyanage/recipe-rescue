@@ -1,10 +1,16 @@
 // ignore: unused_import
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:recipe_rescue/model/Recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_rescue/pages/feedback.dart';
+import 'package:recipe_rescue/utils/connection.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:recipe_rescue/widgets/popingup.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class RecipePage extends StatefulWidget {
@@ -30,11 +36,54 @@ class _RecipePage extends State<RecipePage> {
       context: context,
       builder: (ctx) => const IngredientsPopUp(
         recycleLocations: "potatoes (peeled and cubed) - 4 medium, onions (chopped) - 1 medium, tomatoes (chopped) - 2 medium, curry powder - 1 tbsp, coconut milk (full-fat) - 1 cup",
+        // recycleLocations: widget.recipe_passed.ingredients == null ? "-" : widget.recipe_passed.ingredients!,
       ),
     );
   }
   void setUserIdLocal() async => await storage.write(key: "rceipeId", value: widget.recipe_passed.id);
   
+  Future onTapSave(id) async {
+    print(id);
+    var res = await http.put(Uri.parse("${Connection.baseUrl}/api/recipe/updateRecipesSaveStatus"),
+      headers: <String, String>{
+        'Content-Type': 'application/json;charSet=UTF-8'
+      },
+      body: jsonEncode({"id": id,"saveStatus": true})
+    );
+    var result = await jsonDecode(res.body);
+    print(result);
+    if (result['status'] == 200) {
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.success(
+          message: "Successfilly Saved",
+        ),
+      );
+      Navigator.pushNamed(context, '/saved');
+    } else if (result['status'] == 401) {
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.error(
+          message:
+              "Sorry! Cannot Save at the moment!",
+        ),
+      );
+    } else if (result['status'] == 404) {
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.error(
+          message: "User does not exist!",
+        ),
+      );
+    } else {
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.error(
+          message:"Sorry! Cannot Save at the moment!",
+        ),
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -79,18 +128,24 @@ class _RecipePage extends State<RecipePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    widget.recipe_passed.name!,
-                    style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20,
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        widget.recipe_passed.name!,
+                        style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                        ),
+                        overflow: TextOverflow.visible
+                      ),
+                    ],
                   ),
                   InkWell(
-                      child: Image.asset('assets/images/saved-not-colored-heart.png'),
+                    onTap: () => {onTapSave(widget.recipe_passed.id)},
+                    child: Image.asset(widget.recipe_passed.isSaved! ? 'assets/images/saved-colored-heart.png' : 'assets/images/saved-not-colored-heart.png'),
                   ),
                 ],
               ),
