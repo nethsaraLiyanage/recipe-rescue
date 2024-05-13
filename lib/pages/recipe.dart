@@ -40,7 +40,6 @@ class _RecipePage extends State<RecipePage> {
       ),
     );
   }
-  void setUserIdLocal() async => await storage.write(key: "rceipeId", value: widget.recipe_passed.id);
   
   Future onTapSave(id) async {
     print(id);
@@ -89,10 +88,10 @@ class _RecipePage extends State<RecipePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setUserIdLocal();
   }
 
-  void onFeedback() {
+  void onFeedback() async {
+    await storage.write(key: "rceipeId", value: widget.recipe_passed.id);
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (ctx) => const FeedbackScreen(),

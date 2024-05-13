@@ -12,7 +12,6 @@ class HttpServiceSaved {
       log(res.body);
       final responsebody=jsonDecode(res.body) as List;
       List<Recipe> savedRecipes = responsebody.map((dynamic item) => Recipe.fromJson(item)).toList();
-      print(savedRecipes);
       return savedRecipes;
     } else {
       debugPrint('error');

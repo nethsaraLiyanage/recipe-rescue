@@ -37,7 +37,8 @@ class _RegisterState extends State<Register> {
     var result = jsonDecode(res.body);
     print(result);
     if (result['isSuccess'] = true) {
-      await storage.write(key: "email", value: user.email);
+      var userID = result['userId'];
+      await Auth.rememberUser(userID);
       showTopSnackBar(
         Overlay.of(context),
         const CustomSnackBar.success(

@@ -1,38 +1,69 @@
+import 'dart:convert';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:recipe_rescue/pages/thankyou_screen.dart';
+import 'package:recipe_rescue/utils/connection.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 // ignore: must_be_immutable
-class QuestionScreen extends StatelessWidget {
+class QuestionScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
   QuestionScreen({super.key});
+  _QuestionState createState() => _QuestionState();
+}
 
-  final bool selectedRadio = false;
-  final bool q1Selected = false;
-  late final bool question01;
-  final String question02 = "";
-  final String question03 = "";
-
-  setSelectedRadio(String val) {
-    setState(() {
-      // selectedRadio = val;
-    });
-  }
-  setQ1Radio(bool val) {
-    setState(() {
-      question01 = val;
-    });
-  }
+class _QuestionState extends State<QuestionScreen> {
+  bool q01group = false;
+  String q02group = "";
+  String q03group = "";
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-  void onGetStarted() {
-      Navigator.of(context).pushAndRemoveUntil(
+    final storage = new FlutterSecureStorage();
+
+    Future saveQuestions() async {
+      var userId = await storage.read(key: "userId");
+      var res = await http.post(Uri.parse("${Connection.baseUrl}/api/user/saveUserQuestion"),
+          headers: <String, String>{
+            'Content-Type': 'application/json;charSet=UTF-8'
+          },
+          body: jsonEncode({
+            "id": userId,
+            "questionOneAnswer": q01group,
+            "questionTwoAnswer": q02group,
+            "questionThreeAnswer": q03group
+          }));
+      var result = jsonDecode(res.body);
+      print(result);
+      if (result['isSuccess'] = true) {
+        showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.success(
+            message: "Successfilly saved your responces!",
+          ),
+        );
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (ctx) => const ThankYouScreen(),
           ),
           (route) => false);
+      } else {
+        showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.error(
+            message: "Something went Wrong!",
+          ),
+        );
+      }
+    }
+
+    void onNext() {
+      saveQuestions();
     }
     return Scaffold(
       appBar: AppBar(
@@ -88,9 +119,11 @@ class QuestionScreen extends StatelessWidget {
                             children: <Widget>[
                               Radio(
                                 value: true,
-                                groupValue: q1Selected,
+                                groupValue: q01group,
                                 onChanged: (value) {
-                                  setQ1Radio(value!);
+                                  setState(() {
+                                    q01group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -99,9 +132,11 @@ class QuestionScreen extends StatelessWidget {
                               ),
                               Radio(
                                 value: false,
-                                groupValue: q1Selected,
+                                groupValue: q01group,
                                 onChanged: (value) {
-                                  setQ1Radio(value!);
+                                  setState(() {
+                                    q01group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -120,7 +155,7 @@ class QuestionScreen extends StatelessWidget {
                 height: 15,
               ),
               Container(
-                height: size.height * 0.231,
+                height: size.height * 0.24,
                 width: size.width * 0.89,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 248, 248, 248),
@@ -151,10 +186,12 @@ class QuestionScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Radio(
-                                value: 1,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("20%");
+                                value: "20%",
+                                groupValue: q02group,
+                                onChanged: (value) {
+                                  setState(() {
+                                    q02group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -162,10 +199,12 @@ class QuestionScreen extends StatelessWidget {
                                 style: TextStyle(fontSize: 16),
                               ),
                               Radio(
-                                value: 2,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("40%");
+                                value: "40%",
+                                groupValue: q02group,
+                                onChanged: (value) {
+                                  setState(() {
+                                    q02group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -178,10 +217,12 @@ class QuestionScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Radio(
-                                value: 1,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("80%");
+                                value: "80%",
+                                groupValue: q02group,
+                                onChanged: (value) {
+                                  setState(() {
+                                    q02group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -189,10 +230,12 @@ class QuestionScreen extends StatelessWidget {
                                 style: TextStyle(fontSize: 16),
                               ),
                               Radio(
-                                value: 2,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("95%");
+                                value: "95%",
+                                groupValue: q02group,
+                                onChanged: (value) {
+                                  setState(() {
+                                    q02group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -211,7 +254,7 @@ class QuestionScreen extends StatelessWidget {
                 height: 15,
               ),
               Container(
-                height: size.height * 0.231,
+                height: size.height * 0.24,
                 width: size.width * 0.89,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 248, 248, 248),
@@ -242,10 +285,12 @@ class QuestionScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Radio(
-                                value: 1,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("option 01");
+                                value: "Row Ingredients",
+                                groupValue: q03group,
+                                onChanged: (value) {
+                                  setState(() {
+                                    q03group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -258,10 +303,12 @@ class QuestionScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Radio(
-                                value: 1,
-                                groupValue: selectedRadio,
-                                onChanged: (val) {
-                                  setSelectedRadio("option 01");
+                                value: "Cooked Meals",
+                                groupValue: q03group,
+                                onChanged: (value) {
+                                  setState(() {
+                                    q03group = value!;
+                                  });
                                 },
                               ),
                               const Text(
@@ -280,7 +327,7 @@ class QuestionScreen extends StatelessWidget {
                 height: 15,
               ),
               CustomElevatedButton(
-                    onButtonPressed: onGetStarted,
+                    onButtonPressed: onNext,
                     height: 59,
                     width: 275,
                     childWidget: Text(
@@ -297,6 +344,4 @@ class QuestionScreen extends StatelessWidget {
       ),
     );
   }
-
-  void setState(Null Function() param0) {}
 }

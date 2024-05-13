@@ -33,6 +33,14 @@ class _RecipeScreen extends State<RecipeScreen> {
       ),
       (route) => false);
   }
+
+  onNoData() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (ctx) => const TryAgainScreen(),
+      ),
+      (route) => false);
+  }
   
   @override
   void initState() {
@@ -143,10 +151,9 @@ class _RecipeScreen extends State<RecipeScreen> {
               )
             );
           } else if(!snapshot.hasData) {
-            // When the task is done, show the fetched data
-            return Text('Fetched Data: ${snapshot.data}');
+            return onNoData();
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }),
     );
   }

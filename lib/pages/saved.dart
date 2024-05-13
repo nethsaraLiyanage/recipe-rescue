@@ -33,7 +33,6 @@ class _SavedScreen extends State<SavedScreen> {
           (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
           if (snapshot.hasData) {
             List<Recipe>? recipes = snapshot.data;
-            print(recipes?[0].name);
             return (Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Container(
