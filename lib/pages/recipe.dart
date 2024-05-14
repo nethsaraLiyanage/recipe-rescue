@@ -164,9 +164,9 @@ class _RecipePage extends State<RecipePage> {
                   )
                 ],
                 borderRadius: BorderRadius.circular(20),
-                image: const DecorationImage(
+                image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage('assets/images/test.png'),
+                  image: NetworkImage(widget.recipe_passed.imageUrl ?? ""),
                 ),
               ),
             ),

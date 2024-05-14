@@ -95,9 +95,9 @@ class _SavedScreen extends State<SavedScreen> {
                                                           )
                                                         ],
                                                         borderRadius: BorderRadius.circular(20),
-                                                        image: const DecorationImage(
+                                                        image:  DecorationImage(
                                                           fit: BoxFit.fill,
-                                                          image: AssetImage('assets/images/test.png'),
+                                                          image: NetworkImage(recipe.imageUrl ?? ""),
                                                         ),
                                                       ),
                                                     )

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:recipe_rescue/model/recycle_location_model.dart';
 import 'package:recipe_rescue/widgets/custom_elevated_button.dart';
 
 class IngredientsPopUp extends StatefulWidget {

@@ -5,7 +5,6 @@ import 'package:recipe_rescue/model/Recipe.dart';
 
 import 'package:recipe_rescue/pages/Login.dart';
 import 'package:recipe_rescue/pages/Register.dart';
-import 'package:recipe_rescue/pages/meal.dart';
 import 'package:recipe_rescue/pages/notifications_screen.dart';
 import 'package:recipe_rescue/pages/profile_screen.dart';
 import 'package:recipe_rescue/pages/questions.dart';
@@ -72,7 +71,6 @@ class MyApp extends StatelessWidget {
             isSaved: false,
           ),
         ),
-        '/meal': (context) => const MealScreen(),
         '/saved': (context) => const SavedScreen(),
         '/recipebook': (context) => const RecipeBookScreen(),
         '/recipeList': (context) => const RecipeScreen(

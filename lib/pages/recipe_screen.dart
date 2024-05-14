@@ -104,9 +104,9 @@ class _RecipeScreen extends State<RecipeScreen> {
                                         )
                                       ],
                                       borderRadius: BorderRadius.circular(20),
-                                      image: const DecorationImage(
+                                      image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage('assets/images/test.png'),
+                                        image: NetworkImage(recipe.imageUrl ?? ""),
                                       ),
                                     ),
                                   ),
